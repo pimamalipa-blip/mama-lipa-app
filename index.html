@@ -1,35 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mama Lipa</title>
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 <style>
-body{background:#0f172a;color:white;font-family:sans-serif;padding:20px;text-align:center}
-.card{background:white;color:#0f172a;border-radius:20px;padding:24px;max-width:400px;margin:40px auto}
-.btn{background:#7c3aed;color:white;border:none;padding:16px;width:100%;border-radius:12px;font-size:18px;font-weight:bold;margin-top:16px}
-input{width:100%;padding:14px;border-radius:10px;border:2px solid #ddd;margin-top:10px}
+body{font-family:Arial,sans-serif;background:#f8f8f8;margin:0;padding:20px;text-align:center}
+.card{background:white;border-radius:20px;padding:20px;max-width:400px;margin:auto;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
+h1{color:#6C2BD9}
+.service{display:flex;gap:10px;justify-content:center;margin:15px 0;flex-wrap:wrap}
+.service button{padding:10px 15px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer}
+.service button.active{background:#6C2BD9;color:white}
+input{width:90%;padding:12px;border-radius:12px;border:1px solid #ddd;margin:10px 0;font-size:16px}
+.pay{background:#6C2BD9;color:white;border:none;padding:15px;width:100%;border-radius:15px;font-size:18px;font-weight:bold;cursor:pointer}
+#status{margin-top:15px;font-size:14px;color:#333}
 </style>
 </head>
 <body>
 <div class="card">
 <h1>Mama Lipa</h1>
 <p>Paiement Pi pour Kinshasa</p>
-<input id="amount" type="number" value="1">
-<input id="memo" type="text" value="Paiement Mama Lipa">
-<button class="btn" onclick="pay()">Payer avec Pi</button>
-<p id="status"></p>
+<p>Choisis ton service:</p>
+<div class="service">
+<button onclick="choisir(this,'Vodacom')">Vodacom</button>
+<button onclick="choisir(this,'Orange')">Orange</button>
+<button onclick="choisir(this,'Airtel')">Airtel</button>
+<button onclick="choisir(this,'Canal+')">Canal+</button>
+<button onclick="choisir(this,'SNEL')">SNEL</button>
+</div>
+<input id="montant" type="number" value="1" placeholder="Montant en Pi">
+<input id="numero" type="text" placeholder="Numéro / Abonné ex: 081...">
+<button class="pay" onclick="payer()">Payer avec Pi</button>
+<p id="status">Prêt. Choisis un service et clique Payer.</p>
+<p style="font-size:12px;color:#888">Lia t'aide: Tape ton service, paie en 10 secondes avec Pi.</p>
 </div>
 <script>
-Pi.init({version:"2.0"});
-async function pay(){
- let s=document.getElementById('status');
- try{
-  let a=await Pi.authenticate(['payments','username'],()=>{});
-  s.textContent="Salut @"+a.user.username;
-  await Pi.createPayment({amount:1,memo:"Mama Lipa",metadata:{}},{onReadyForServerApproval:(id)=>{s.textContent=id},onReadyForServerCompletion:(id,tx)=>{s.textContent="Paye! "+tx},onCancel:()=>{s.textContent="Annule"},onError:(e)=>{s.textContent=e}});
- }catch(e){s.textContent=e.message}
+let serviceChoisi="Vodacom";
+function choisir(btn,nom){serviceChoisi=nom;document.querySelectorAll('.service button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('status').innerText="Service: "+nom;}
+const Pi=window.Pi;
+if(Pi){Pi.init({version:"2.0",sandbox:false});}
+async function payer(){
+const montant=document.getElementById('montant').value;
+const numero=document.getElementById('numero').value;
+const status=document.getElementById('status');
+if(!Pi){status.innerText="Ouvre cette page dans Pi Browser, pas Chrome.";alert("Ouvre dans Pi Browser pour payer avec Pi");return;}
+if(!montant||montant<=0){status.innerText="Mets un montant valide";return;}
+status.innerText="Connexion à Pi... patiente...";
+try{
+const auth=await Pi.authenticate(['username','payments'],function(p){});
+status.innerText="Mbote "+auth.user.username+"! Ouverture du Wallet...";
+await Pi.createPayment({amount:parseFloat(montant),memo:"Mama Lipa - "+serviceChoisi+" - "+numero,metadata:{service:serviceChoisi,numero:numero}},{
+onReadyForServerApproval:function(paymentId){status.innerText="En attente... ID: "+paymentId;},
+onReadyForServerCompletion:function(paymentId,txid){status.innerText="Paiement réussi! Merci! Tx: "+txid;alert("Paiement Mama Lipa réussi!");},
+onCancel:function(paymentId){status.innerText="Paiement annulé";},
+onError:function(error,payment){status.innerText="Erreur: "+error;alert("Erreur: "+JSON.stringify(error));}
+});
+}catch(e){status.innerText="Erreur: "+e.message;alert("Erreur Pi: "+e.message);}
 }
 </script>
 </body>
