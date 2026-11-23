@@ -29,15 +29,7 @@ input{width:90%;padding:12px;border-radius:12px;border:1px solid #ddd;margin:10p
 <button onclick="choisir(this,'Canal+')">Canal+</button>
 <button onclick="choisir(this,'SNEL')">SNEL</button>
 </div>
-<div id="forfaits">
-<p><b>Choisis ton forfait Vodacom :</b></p>
-<button onclick="document.getElementById('montant').value=1">1$ = 1,5 GB - 24h</button>
-<button onclick="document.getElementById('montant').value=1">1$ = 1 GB - 48h</button>
-<button onclick="document.getElementById('montant').value=2">2$ = 2,5 GB - 48h</button>
-<button onclick="document.getElementById('montant').value=5">5$ = 3,2 GB - 7 jours</button>
-<button onclick="document.getElementById('montant').value=10">10$ = 14 GB - 7 jours</button>
-<button onclick="document.getElementById('montant').value=1">1$ = 5 GB - Nuit</button>
-</div>
+<div id="forfaits"></div>
 <input id="montant" type="number" value="1" placeholder="Montant en Pi">
 <input id="numero" type="text" placeholder="Numéro / Abonné ex: 081...">
 <button class="pay" onclick="payer()">Payer avec Pi</button>
@@ -46,7 +38,31 @@ input{width:90%;padding:12px;border-radius:12px;border:1px solid #ddd;margin:10p
 </div>
 <script>
 let serviceChoisi="Vodacom";
-function choisir(btn,nom){serviceChoisi=nom;document.querySelectorAll('.service button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('status').innerText="Service: "+nom;}
+function afficherForfaits(nom){
+let html="";
+if(nom=="Vodacom"){
+html="<p><b>Choisis ton forfait Vodacom :</b></p>";
+html+='<button onclick="document.getElementById(\'montant\').value=1">1$ = 1,5 GB - 24h</button>';
+html+='<button onclick="document.getElementById(\'montant\').value=1">1$ = 1 GB - 48h</button>';
+html+='<button onclick="document.getElementById(\'montant\').value=2">2$ = 2,5 GB - 48h</button>';
+html+='<button onclick="document.getElementById(\'montant\').value=5">5$ = 3,2 GB - 7 jours</button>';
+html+='<button onclick="document.getElementById(\'montant\').value=10">10$ = 14 GB - 7 jours</button>';
+html+='<button onclick="document.getElementById(\'montant\').value=1">1$ = 5 GB - Nuit</button>';
+}
+if(nom=="Orange"){
+html="<p><b>Choisis ton forfait Orange :</b></p>";
+html+='<button onclick="document.getElementById(\'montant\').value=2">2$ = 5 Go - 72H</button>';
+html+='<button onclick="document.getElementById(\'montant\').value=1.5">1.50$ = 4 Go - 48H</button>';
+html+='<button onclick="document.getElementById(\'montant\').value=1.2">1.20$ = 3 Go - 48H</button>';
+html+='<button onclick="document.getElementById(\'montant\').value=1">1$ = 2,5 Go - 24H</button>';
+html+='<button onclick="document.getElementById(\'montant\').value=0.5">0.50$ = 1 Go - Jour J</button>';
+html+='<button onclick="document.getElementById(\'montant\').value=0.2">0.20$ = 120 Mo - 3jrs</button>';
+html+='<button onclick="document.getElementById(\'montant\').value=0.3">0.30$ = 200 Mo - 3jrs</button>';
+html+='<button onclick="document.getElementById(\'montant\').value=0.5">0.50$ = 350 Mo - 3jrs</button>';
+}
+document.getElementById("forfaits").innerHTML=html;
+}
+function choisir(btn,nom){serviceChoisi=nom; afficherForfaits(nom); document.querySelectorAll('.service button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('status').innerText="Service: "+nom;}
 const Pi=window.Pi;
 if(Pi){Pi.init({version:"2.0",sandbox:false});}
 async function payer(){
