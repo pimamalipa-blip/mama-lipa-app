@@ -62,7 +62,14 @@ html+='<button onclick="document.getElementById(\'montant\').value=0.5">0.50$ = 
 }
 document.getElementById("forfaits").innerHTML=html;
 }
-function choisir(btn,nom){serviceChoisi=nom; afficherForfaits(nom); document.querySelectorAll('.service button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('status').innerText="Service: "+nom;}
+document.getElementById("forfaits").addEventListener("click",function(e){
+if(e.target.tagName=="BUTTON"){
+let tous=document.querySelectorAll("#forfaits button");
+tous.forEach(b=>{b.style.background="white";b.style.color="black";});
+e.target.style.background="#7c3aed";e.target.style.color="white";
+}
+});
+  function choisir(btn,nom){serviceChoisi=nom; afficherForfaits(nom); document.querySelectorAll('.service button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('status').innerText="Service: "+nom;}
 const Pi=window.Pi;
 if(Pi){Pi.init({version:"2.0",sandbox:false});}
 async function payer(){
