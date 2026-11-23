@@ -39,7 +39,16 @@ input{width:90%;padding:12px;border-radius:12px;border:1px solid #ddd;margin:10p
 </div>
 <script>
 function ouvrirLia(){
-alert("Bonjour, je suis Lia ! Je peux vous aider en francais et en lingala. Quel forfait voulez-vous ?");
+let boite = document.getElementById("boiteLia");
+if(!boite){
+boite = document.createElement("div");
+boite.id = "boiteLia";
+boite.style = "background:#F3E8FF;border:2px solid #6C2BD9;border-radius:15px;padding:12px;margin-top:12px;text-align:left;";
+boite.innerHTML = "<b>💬 Lia :</b><br>Bonjour, je suis Lia ! Je peux vous aider en francais et en lingala. Quel forfait voulez-vous ?<br><br><i>Vodacom, Orange, Airtel, Canal+ ou SNEL ?</i>";
+document.getElementById("status").after(boite);
+} else {
+boite.style.display = boite.style.display === "none" ? "block" : "none";
+}
 }
 let serviceChoisi="Vodacom";
 function afficherForfaits(nom){
