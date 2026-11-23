@@ -70,6 +70,12 @@ html+="<button onclick=\"document.getElementById('montant').value='0.2'\">0.2$ =
 html+="<button onclick=\"document.getElementById('montant').value='1'\">1$ = 600 MB - 7 jours</button>";
 html+="<button onclick=\"document.getElementById('montant').value='0.5'\">0.5$ = 300 MB - 3 jours</button>";
 }
+if(nom=="Canal+"){
+html="<p><b>Canal+ - Bientôt disponible</b></p><p>Nos offres Canal+ arrivent très bientôt sur PiPay. Restez connectés !</p>";
+}
+if(nom=="SNEL"){
+html="<p><b>SNEL - Bientôt disponible</b></p><p>Le paiement de vos factures SNEL arrive très bientôt sur PiPay. Restez connectés !</p>";
+}
 document.getElementById("forfaits").innerHTML=html;
 }
 document.getElementById("forfaits").addEventListener("click",function(e){
