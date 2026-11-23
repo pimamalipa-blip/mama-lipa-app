@@ -60,6 +60,16 @@ html+='<button onclick="document.getElementById(\'montant\').value=0.2">0.20$ = 
 html+='<button onclick="document.getElementById(\'montant\').value=0.3">0.30$ = 200 Mo - 3jrs</button>';
 html+='<button onclick="document.getElementById(\'montant\').value=0.5">0.50$ = 350 Mo - 3jrs</button>';
 }
+if(nom=="Airtel"){
+html="<p><b>Choisis ton forfait Airtel :</b></p>";
+html+="<button onclick=\"document.getElementById('montant').value='7'\">7$ = 9 GB - 7 jours</button>";
+html+="<button onclick=\"document.getElementById('montant').value='5'\">5$ = 3.5 GB - 7 jours</button>";
+html+="<button onclick=\"document.getElementById('montant').value='1'\">1$ = 2.2 GB - 24H</button>";
+html+="<button onclick=\"document.getElementById('montant').value='2'\">2$ = 1.25 GB - 7 jours</button>";
+html+="<button onclick=\"document.getElementById('montant').value='0.2'\">0.2$ = 120 MB - 3 jours</button>";
+html+="<button onclick=\"document.getElementById('montant').value='1'\">1$ = 600 MB - 7 jours</button>";
+html+="<button onclick=\"document.getElementById('montant').value='0.5'\">0.5$ = 300 MB - 3 jours</button>";
+}
 document.getElementById("forfaits").innerHTML=html;
 }
 document.getElementById("forfaits").addEventListener("click",function(e){
