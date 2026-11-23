@@ -33,10 +33,14 @@ input{width:90%;padding:12px;border-radius:12px;border:1px solid #ddd;margin:10p
 <input id="montant" type="number" value="1" placeholder="Montant en Pi">
 <input id="numero" type="text" placeholder="Numéro / Abonné ex: 081...">
 <button class="pay" onclick="payer()">Payer avec Pi</button>
+<button onclick="ouvrirLia()" style="width:100%;padding:12px;margin-top:10px;background:white;border:2px solid #6C2BD9;color:#6C2BD9;border-radius:12px;font-weight:bold;">💬 Parler à Lia - Ask Assistant IA</button>
 <p id="status">Prêt. Choisis un service et clique Payer.</p>
 <p style="font-size:12px;color:#888">Lia t'aide: Tape ton service, paie en 10 secondes avec Pi.</p>
 </div>
 <script>
+function ouvrirLia(){
+alert("Bonjour, je suis Lia ! Je peux vous aider en francais et en lingala. Quel forfait voulez-vous ?");
+}
 let serviceChoisi="Vodacom";
 function afficherForfaits(nom){
 let html="";
@@ -85,7 +89,7 @@ tous.forEach(b=>{b.style.background="white";b.style.color="black";});
 e.target.style.background="#7c3aed";e.target.style.color="white";
 }
 });
-  function choisir(btn,nom){serviceChoisi=nom; afficherForfaits(nom); document.querySelectorAll('.service button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('status').innerText="Service: "+nom;}
+function choisir(btn,nom){serviceChoisi=nom; afficherForfaits(nom); document.querySelectorAll('.service button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('status').innerText="Service: "+nom;}
 const Pi=window.Pi;
 if(Pi){Pi.init({version:"2.0",sandbox:false});}
 async function payer(){
