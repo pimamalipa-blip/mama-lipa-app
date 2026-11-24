@@ -27,7 +27,7 @@ input{width:90%;padding:12px;border-radius:12px;border:1px solid #ddd;margin:10p
 <button onclick="choisir(this,'Orange')">Orange</button>
 <button onclick="choisir(this,'Airtel')">Airtel</button>
 <button onclick="choisir(this,'Canal+')">Canal+</button>
-<button onclick="choisir(this,'SNEL')">SNEL</button>
+<button onclick="choisir(this,'StarTimes)">StarTimes</button>
 </div>
 <div id="forfaits"></div>
 <input id="montant" type="number" value="1" placeholder="Montant en Pi">
@@ -44,7 +44,7 @@ if(!boite){
 boite = document.createElement("div");
 boite.id = "boiteLia";
 boite.style = "background:#F3E8FF;border:2px solid #6C2BD9;border-radius:15px;padding:12px;margin-top:12px;text-align:left;";
-boite.innerHTML = "<b>💬 Lia :</b><br>Bonjour, je suis Lia ! Je peux vous aider en francais et en lingala. Quel forfait voulez-vous ?<br><br><i>Vodacom, Orange, Airtel, Canal+ ou SNEL ?</i>";
+boite.innerHTML = "<b>💬 Lia :</b><br>Bonjour, je suis Lia ! Je peux vous aider en francais et en lingala. Quel forfait voulez-vous ?<br><br><i>Vodacom, Orange, Airtel, Canal+ ou StarTimes ?</i>";
 document.getElementById("status").after(boite);
 } else {
 boite.style.display = boite.style.display === "none" ? "block" : "none";
@@ -86,8 +86,8 @@ html+="<button onclick=\"document.getElementById('montant').value='0.5'\">0.5$ =
 if(nom=="Canal+"){
 html="<p><b>Canal+ - Bientôt disponible</b></p><p>Nos offres Canal+ arrivent très bientôt sur PiPay. Restez connectés !</p>";
 }
-if(nom=="SNEL"){
-html="<p><b>SNEL - Bientôt disponible</b></p><p>Le paiement de vos factures SNEL arrive très bientôt sur PiPay. Restez connectés !</p>";
+if(nom=="StarTimes"){
+html="<p><b>StarTimes - Bientôt disponible</b></p><p>Nos offres StarTimes arrivent très bientôt sur PiPay. Restez connectés !</p>";
 }
 document.getElementById("forfaits").innerHTML=html;
 }
