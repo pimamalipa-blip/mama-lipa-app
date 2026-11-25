@@ -69,7 +69,7 @@ choixFrancais="<b>💬 Lia :</b><br>Super ! Tu as choisi le Français. Quel forf
 choixLingala="<b>💬 Lia :</b><br>Malámu ! Oponi Lingala. Forfait nini olingi omona ?<br><br><button onclick='parlerLia()'>🔊 Ecouter</button><br><br><button onclick='afficherForfaits(\"Vodacom\")'>Vodacom</button> <button onclick='afficherForfaits(\"Orange\")'>Orange</button> <button onclick='afficherForfaits(\"Airtel\")'>Airtel</button>";
 function parlerLia(){let texte=document.getElementById("boiteLia").innerText;let voix=new SpeechSynthesisUtterance(texte);voix.lang='fr-FR';speechSynthesis.speak(voix);}
 function fermerLia(){let b=document.getElementById("boiteLia");if(b){b.remove();}}
-document.addEventListener("click",function(e){let b=document.getElementById("boiteLia");if(b && !b.contains(e.target) && e.target.innerText!="Parler à Lia"){b.remove();}});
+
 function afficherForfaits(nom){
 let html="";
 if(nom=="Vodacom"){
