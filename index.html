@@ -51,8 +51,8 @@ document.body.appendChild(boite);
 boite.style.display = boite.style.display === "none" ? "block" : "none";
 }
 }
-function choixFrancais(){ alert("Super ! On continue en Français. Quel forfait veux-tu ?"); }
-function choixLingala(){ alert("Malamu ! To continuer na Lingala. Forfait nini o lingi ?"); }let serviceChoisi="Vodacom";
+function choixFrancais(){ document.getElementById("boiteLia").innerHTML="<b>💬 Lia :</b><br>Super ! On continue en Francais. Quel service veux-tu payer ?<br><br><button onclick=\"afficherForfaits('Vodacom')\">Vodacom</button> <button onclick=\"afficherForfaits('Orange')\">Orange</button> <button onclick=\"afficherForfaits('Airtel')\">Airtel</button>"; }
+function choixLingala(){ document.getElementById("boiteLia").innerHTML="<b>💬 Lia :</b><br>Malamu ! To continuer na Lingala. Service nini olingi kofuta ?<br><br><button onclick=\"afficherForfaits('Vodacom')\">Vodacom</button> <button onclick=\"afficherForfaits('Orange')\">Orange</button> <button onclick=\"afficherForfaits('Airtel')\">Airtel</button>"; }
 function afficherForfaits(nom){
 let html="";
 if(nom=="Vodacom"){
