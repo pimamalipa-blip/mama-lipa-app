@@ -65,8 +65,8 @@ boite.style.display = boite.style.display === "none" ? "block" : "none";
 }
 function choisirLia(nom){ speechSynthesis.cancel(); afficherForfaits(nom); }
 function parlerLia(){ speechSynthesis.cancel(); var texte=document.getElementById("boiteLia").innerText; var voix=new SpeechSynthesisUtterance(texte); voix.lang="fr-FR"; speechSynthesis.speak(voix); }
-function choixFrancais(){ document.getElementById("boiteLia").innerHTML="<b>💬 Lia :</b><br>Super ! On continue en Francais. Choisis ton service juste au dessus.<br><br><button onclick=\"parlerLia()\">🔊 Ecouter</button>"; }
-function choixLingala(){ document.getElementById("boiteLia").innerHTML="<b>💬 Lia :</b><br>Malamu ! To continuer na Lingala. Service nini olingi kofuta ?<br><br><button onclick=\"afficherForfaits('Vodacom')\">Vodacom</button> <button onclick=\"afficherForfaits('Orange')\">Orange</button> <button onclick=\"afficherForfaits('Airtel')\">Airtel</button>"; }
+function choixFrancais(){ document.getElementById("boiteLia").innerHTML="<b>💬 Lia :</b><br>Super ! On continue en Francais. Choisis ton service juste au dessus.<br><br><button onclick='parlerLia()'>🔊 Ecouter</button>"; }
+function choixLingala(){ document.getElementById("boiteLia").innerHTML="<b>💬 Lia :</b><br>Malamu ! To continuer na Lingala. Service nini olingi kofuta ?<br><br><button onclick=’parlerLia()'>🔊 Ecouter</button><br><br>('Vodacom')\">Vodacom</button> <button onclick=\"afficherForfaits('Orange')\">Orange</button> <button onclick=\"afficherForfaits('Airtel')\">Airtel</button>"; }
 
 function afficherForfaits(nom){
 let html="";
