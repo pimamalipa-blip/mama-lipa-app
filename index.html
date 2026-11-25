@@ -68,6 +68,7 @@ function parlerLia(){ speechSynthesis.cancel(); var texte=document.getElementByI
 choixFrancais = "Super ! Tu as choisi le Français. <button onclick='ecouterTexte(\"Super ! Tu as choisi le Français.\")'>🔊 Ecouter</button> <button onclick='fermerLia()'>✕ Fermer</button>";
 choixLingala = "Malonga ! Oponi Lingala. <button onclick='ecouterTexte(\"Malonga ! Oponi Lingala.\")'>🔊 Yoka</button> <button onclick='fermerLia()'>✕ Kokanga</button>";
 function parlerLia(){let b=document.getElementById("boiteLia");if(b){b.style.display="block";}let texte=b.innerText;let voix=new SpeechSynthesisUtterance(texte);voix.lang='fr-FR';speechSynthesis.speak(voix);}
+function ecouterTexte(texte){speechSynthesis.cancel();let voix=new SpeechSynthesisUtterance(texte);voix.lang='fr-FR';speechSynthesis.speak(voix);}
 function fermerLia(){let b=document.getElementById("boiteLia");if(b){b.style.display="none";}}
 
 function afficherForfaits(nom){
