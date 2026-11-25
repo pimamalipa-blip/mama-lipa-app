@@ -12,6 +12,7 @@ h1{color:#6C2BD9}
 .service{display:flex;gap:10px;justify-content:center;margin:15px 0;flex-wrap:wrap}
 .service button{padding:10px 15px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer}
 .service button.active{background:#6C2BD9;color:white}
+#forfaits button{padding:10px 12px;border-radius:15px;border:1px solid #ddd;background:#fff;cursor:pointer;margin:5px}
 input{width:90%;padding:12px;border-radius:12px;border:1px solid #ddd;margin:10px 0;font-size:16px}
 .pay{background:#6C2BD9;color:white;border:none;padding:15px;width:100%;border-radius:15px;font-size:18px;font-weight:bold;cursor:pointer}
 #status{margin-top:15px;font-size:14px;color:#333}
@@ -30,7 +31,7 @@ input{width:90%;padding:12px;border-radius:12px;border:1px solid #ddd;margin:10p
 <button onclick="choisir(this, 'StarTimes')">StarTimes</button>
 </div>
 <div id="forfaits"></div>
-<input id="montant" type="number" value="1" placeholder="Montant en Pi">
+<input id="montant" type="number" value="" placeholder="Montant en Pi">
 <input id="numero" type="text" placeholder="Numéro / Abonné ex: 081...">
 <button class="pay" onclick="payer()">Payer avec Pi</button>
 <button onclick="ouvrirLia()" style="width:100%;padding:12px;margin-top:10px;background:white;border:2px solid #6C2BD9;color:#6C2BD9;border-radius:12px;font-weight:bold;">💬 Parler à Lia - Ask Assistant IA</button>
@@ -38,6 +39,18 @@ input{width:90%;padding:12px;border-radius:12px;border:1px solid #ddd;margin:10p
 <p style="font-size:12px;color:#888">Lia t'aide: Tape ton service, paie en 10 secondes avec Pi.</p>
 </div>
 <script>
+let serviceChoisi = "";
+
+// TAUX A CHANGER PLUS TARD : 1$ = 0,2 Pi
+// Quand la CoreTeam publie la vraie valeur, tu changes juste ce chiffre
+const TAUX = 0.2;
+
+function choisirForfait(prixDollar, label){
+  let montantPi = (prixDollar * TAUX).toFixed(2);
+  document.getElementById('montant').value = montantPi;
+  document.getElementById('status').innerText = "Forfait choisi : " + label + " = " + montantPi + " Pi";
+}
+
 function ouvrirLia(){
 let boite = document.getElementById("boiteLia");
 if(!boite){
@@ -46,44 +59,46 @@ boite.id = "boiteLia";
 boite.style = "background:#F3E8FF;border:2px solid #6C2BD9;border-radius:15px;padding:12px;margin-top:12px;text-align:left;";
 boite.innerHTML = "<b>💬 Lia :</b><br>Bonjour, je suis Lia ! Je peux vous aider en francais et en lingala. Quel forfait voulez-vous ?<br><br><i>Vodacom, Orange, Airtel, Canal+ ou StarTimes ?<br><br><button onclick='choixFrancais()'>🇫🇷 Français</button> <button onclick='choixLingala()'>🇨🇩 Lingala</button></i>";
 document.body.appendChild(boite);
-
 } else {
 boite.style.display = boite.style.display === "none" ? "block" : "none";
 }
 }
-function choisirLia(nom){ speechSynthesis.cancel(); afficherForfaits(nom); } function parlerLia(){ speechSynthesis.cancel(); var texte=document.getElementById("boiteLia").innerText; var voix=new SpeechSynthesisUtterance(texte); voix.lang="fr-FR"; speechSynthesis.speak(voix); }
-function choixFrancais(){ document.getElementById("boiteLia").innerHTML="<b>💬 Lia :</b><br>Super ! On continue en Francais. Choisis ton service juste au dessus.<br><br><button onclick=\"parlerLia()\">🔊 Ecouter</button>"; }function choixLingala(){ document.getElementById("boiteLia").innerHTML="<b>💬 Lia :</b><br>Malamu ! To continuer na Lingala. Service nini olingi kofuta ?<br><br><button onclick=\"afficherForfaits('Vodacom')\">Vodacom</button> <button onclick=\"afficherForfaits('Orange')\">Orange</button> <button onclick=\"afficherForfaits('Airtel')\">Airtel</button>"; }
-function choixLingala(){ document.getElementById("boiteLia").innerHTML="<b>💬 Lia :</b><br>Super ! Toko continuer na Lingala. Pona service na yo likolo.<br><br><button onclick=\"parlerLia()\">🔊 Ecouter</button>"; }
-function afficherForfaits(nom){ let html="";
+function choisirLia(nom){ speechSynthesis.cancel(); afficherForfaits(nom); }
+function parlerLia(){ speechSynthesis.cancel(); var texte=document.getElementById("boiteLia").innerText; var voix=new SpeechSynthesisUtterance(texte); voix.lang="fr-FR"; speechSynthesis.speak(voix); }
+function choixFrancais(){ document.getElementById("boiteLia").innerHTML="<b>💬 Lia :</b><br>Super ! On continue en Francais. Choisis ton service juste au dessus.<br><br><button onclick=\"parlerLia()\">🔊 Ecouter</button>"; }
+function choixLingala(){ document.getElementById("boiteLia").innerHTML="<b>💬 Lia :</b><br>Malamu ! To continuer na Lingala. Service nini olingi kofuta ?<br><br><button onclick=\"afficherForfaits('Vodacom')\">Vodacom</button> <button onclick=\"afficherForfaits('Orange')\">Orange</button> <button onclick=\"afficherForfaits('Airtel')\">Airtel</button>"; }
+
+function afficherForfaits(nom){
+let html="";
 if(nom=="Vodacom"){
 html="<p><b>Choisis ton forfait Vodacom :</b></p>";
-html+='<button onclick="document.getElementById(\'montant\').value=1">1$ = 1,5 GB - 24h</button>';
-html+='<button onclick="document.getElementById(\'montant\').value=1">1$ = 1 GB - 48h</button>';
-html+='<button onclick="document.getElementById(\'montant\').value=2">2$ = 2,5 GB - 48h</button>';
-html+='<button onclick="document.getElementById(\'montant\').value=5">5$ = 3,2 GB - 7 jours</button>';
-html+='<button onclick="document.getElementById(\'montant\').value=10">10$ = 14 GB - 7 jours</button>';
-html+='<button onclick="document.getElementById(\'montant\').value=1">1$ = 5 GB - Nuit</button>';
+html+='<button onclick="choisirForfait(1,\'1$ = 1,5 GB - 24h\')">1$ = 1,5 GB - 24h</button>';
+html+='<button onclick="choisirForfait(1,\'1$ = 1 GB - 48h\')">1$ = 1 GB - 48h</button>';
+html+='<button onclick="choisirForfait(2,\'2$ = 2,5 GB - 48h\')">2$ = 2,5 GB - 48h</button>';
+html+='<button onclick="choisirForfait(5,\'5$ = 3,2 GB - 7 jours\')">5$ = 3,2 GB - 7 jours</button>';
+html+='<button onclick="choisirForfait(10,\'10$ = 14 GB - 7 jours\')">10$ = 14 GB - 7 jours</button>';
+html+='<button onclick="choisirForfait(1,\'1$ = 5 GB - Nuit\')">1$ = 5 GB - Nuit</button>';
 }
 if(nom=="Orange"){
 html="<p><b>Choisis ton forfait Orange :</b></p>";
-html+='<button onclick="document.getElementById(\'montant\').value=2">2$ = 5 Go - 72H</button>';
-html+='<button onclick="document.getElementById(\'montant\').value=1.5">1.50$ = 4 Go - 48H</button>';
-html+='<button onclick="document.getElementById(\'montant\').value=1.2">1.20$ = 3 Go - 48H</button>';
-html+='<button onclick="document.getElementById(\'montant\').value=1">1$ = 2,5 Go - 24H</button>';
-html+='<button onclick="document.getElementById(\'montant\').value=0.5">0.50$ = 1 Go - Jour J</button>';
-html+='<button onclick="document.getElementById(\'montant\').value=0.2">0.20$ = 120 Mo - 3jrs</button>';
-html+='<button onclick="document.getElementById(\'montant\').value=0.3">0.30$ = 200 Mo - 3jrs</button>';
-html+='<button onclick="document.getElementById(\'montant\').value=0.5">0.50$ = 350 Mo - 3jrs</button>';
+html+='<button onclick="choisirForfait(2,\'2$ = 5 Go - 72H\')">2$ = 5 Go - 72H</button>';
+html+='<button onclick="choisirForfait(1.5,\'1.50$ = 4 Go - 48H\')">1.50$ = 4 Go - 48H</button>';
+html+='<button onclick="choisirForfait(1.2,\'1.20$ = 3 Go - 48H\')">1.20$ = 3 Go - 48H</button>';
+html+='<button onclick="choisirForfait(1,\'1$ = 2,5 Go - 24H\')">1$ = 2,5 Go - 24H</button>';
+html+='<button onclick="choisirForfait(0.5,\'0.50$ = 1 Go - Jour J\')">0.50$ = 1 Go - Jour J</button>';
+html+='<button onclick="choisirForfait(0.2,\'0.20$ = 120 Mo - 3jrs\')">0.20$ = 120 Mo - 3jrs</button>';
+html+='<button onclick="choisirForfait(0.3,\'0.30$ = 200 Mo - 3jrs\')">0.30$ = 200 Mo - 3jrs</button>';
+html+='<button onclick="choisirForfait(0.5,\'0.50$ = 350 Mo - 3jrs\')">0.50$ = 350 Mo - 3jrs</button>';
 }
 if(nom=="Airtel"){
 html="<p><b>Choisis ton forfait Airtel :</b></p>";
-html+="<button onclick=\"document.getElementById('montant').value='7'\">7$ = 9 GB - 7 jours</button>";
-html+="<button onclick=\"document.getElementById('montant').value='5'\">5$ = 3.5 GB - 7 jours</button>";
-html+="<button onclick=\"document.getElementById('montant').value='1'\">1$ = 2.2 GB - 24H</button>";
-html+="<button onclick=\"document.getElementById('montant').value='2'\">2$ = 1.25 GB - 7 jours</button>";
-html+="<button onclick=\"document.getElementById('montant').value='0.2'\">0.2$ = 120 MB - 3 jours</button>";
-html+="<button onclick=\"document.getElementById('montant').value='1'\">1$ = 600 MB - 7 jours</button>";
-html+="<button onclick=\"document.getElementById('montant').value='0.5'\">0.5$ = 300 MB - 3 jours</button>";
+html+="<button onclick=\"choisirForfait(7,'7$ = 9 GB - 7 jours')\">7$ = 9 GB - 7 jours</button>";
+html+="<button onclick=\"choisirForfait(5,'5$ = 3.5 GB - 7 jours')\">5$ = 3.5 GB - 7 jours</button>";
+html+="<button onclick=\"choisirForfait(1,'1$ = 2.2 GB - 24H')\">1$ = 2.2 GB - 24H</button>";
+html+="<button onclick=\"choisirForfait(2,'2$ = 1.25 GB - 7 jours')\">2$ = 1.25 GB - 7 jours</button>";
+html+="<button onclick=\"choisirForfait(0.2,'0.2$ = 120 MB - 3 jours')\">0.2$ = 120 MB - 3 jours</button>";
+html+="<button onclick=\"choisirForfait(1,'1$ = 600 MB - 7 jours')\">1$ = 600 MB - 7 jours</button>";
+html+="<button onclick=\"choisirForfait(0.5,'0.5$ = 300 MB - 3 jours')\">0.5$ = 300 MB - 3 jours</button>";
 }
 if(nom=="Canal+"){
 html="<p><b>Canal+ - Bientôt disponible</b></p><p>Nos offres Canal+ arrivent très bientôt sur PiPay. Restez connectés !</p>";
@@ -123,4 +138,4 @@ onError:function(error,payment){status.innerText="Erreur: "+error;alert("Erreur:
 }
 </script>
 </body>
-</html> <!-- redeploy -->
+</html>
