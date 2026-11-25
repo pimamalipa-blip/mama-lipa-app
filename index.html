@@ -56,7 +56,7 @@ let boite = document.getElementById("boiteLia");
 if(!boite){
 boite = document.createElement("div");
 boite.id = "boiteLia";
-boite.style = "background:#F3E8FF;border:2px solid #6C2BD9;border-radius:15px;padding:8px;position:fixed; bottom:10px; left:10px; right:10px; z-index:9999;;text-align:left;";
+boite.style = "background:#F3E8FF;border:2px solid #6C2BD9;border-radius:15px;padding:8px;max-height:180px; overflow-y:auto; font-size:14px;position:fixed; bottom:10px; left:10px; right:10px; z-index:9999;;text-align:left;";
 boite.innerHTML = "<b>💬 Lia :</b><br>Bonjour, je suis Lia ! Je peux vous aider en francais et en lingala. Quel forfait voulez-vous ?<br><br><i>Vodacom, Orange, Airtel, Canal+ ou StarTimes ?<br><br><button onclick='choixFrancais()'>🇫🇷 Français</button> <button onclick='choixLingala()'>🇨🇩 Lingala</button></i>";
 document.querySelector(".card").appendChild(boite); boite.scrollIntoView({behavior:"smooth"});
 } else {
