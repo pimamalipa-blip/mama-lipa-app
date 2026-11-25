@@ -58,7 +58,7 @@ boite = document.createElement("div");
 boite.id = "boiteLia";
 boite.style = "background:#F3E8FF;border:2px solid #6C2BD9;border-radius:15px;padding:12px;margin-top:12px;text-align:left;";
 boite.innerHTML = "<b>💬 Lia :</b><br>Bonjour, je suis Lia ! Je peux vous aider en francais et en lingala. Quel forfait voulez-vous ?<br><br><i>Vodacom, Orange, Airtel, Canal+ ou StarTimes ?<br><br><button onclick='choixFrancais()'>🇫🇷 Français</button> <button onclick='choixLingala()'>🇨🇩 Lingala</button></i>";
-document.body.appendChild(boite);
+document.querySelector(".card").appendChild(boite); boite.scrollIntoView({behavior:"smooth"});
 } else {
 boite.style.display = boite.style.display === "none" ? "block" : "none";
 }
