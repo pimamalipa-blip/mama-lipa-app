@@ -67,7 +67,7 @@ boite.scrollIntoView({behavior:"smooth"});
 boite.style.display = boite.style.display === "none" ? "block" : "none";
 }
 }
-function choisirLia(nom){ speechSynthesis.cancel(); if(nom=="fr"){document.getElementById("boiteLia").innerHTML=choixFrancais;}else{document.getElementById("boiteLia").innerHTML=choixLingala;} }
+function choisirLia(nom){ if(nom=="fr"){document.getElementById("boiteLia").innerHTML=choixFrancais;}else{document.getElementById("boiteLia").innerHTML=choixLingala;} }
 function parlerLia(){ speechSynthesis.cancel(); var texte=document.getElementById("boiteLia").innerText; var voix=new SpeechSynthesisUtterance(texte); voix.lang="fr-FR"; speechSynthesis.speak(voix); }
 choixFrancais = "Super ! Tu as choisi le Français. Maintenant, choisis ton service ci-dessus : Vodacom, Orange ou Airtel. <button onclick='ecouterTexte(\"Super ! Tu as choisi le Français. Maintenant, choisis ton service ci-dessus : Vodacom, Orange ou Airtel.\")'>🔊 Ecouter</button> <button onclick='fermerLia()'>✕ Fermer</button>";
 choixLingala = "Malonga ! Oponi Lingala. Sikoyo, ponaka service na yo likolo : Vodacom, Orange to Airtel. <button onclick='ecouterTexte(\"Malonga ! Oponi Lingala. Sikoyo, ponaka service na yo likolo : Vodacom, Orange to Airtel.\")'>🔊 Yoka</button> <button onclick='fermerLia()'>✕ Kokanga</button>";
