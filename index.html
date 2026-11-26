@@ -69,8 +69,8 @@ boite.style.display = boite.style.display === "none" ? "block" : "none";
 }
 function choisirLia(nom){ if(nom=="fr"){document.getElementById("boiteLia").innerHTML=choixFrancais;}else{document.getElementById("boiteLia").innerHTML=choixLingala;} }
 function ecouterTexte(){ var texte=document.getElementById("boiteLia").innerText.replace("🎧 Ecouter","").replace("X Fermer","").replace("Fermer",""); try{ speechSynthesis.cancel(); var u=new SpeechSynthesisUtterance(texte); u.lang="fr-FR"; speechSynthesis.speak(u); }catch(e){} setTimeout(function(){ var a=new Audio("https://api.streamelements.com/kappa/v2/speech?voice=Brian&text="+encodeURIComponent(texte)); a.play().catch(function(){}); }, 800); }
-choixFrancais = "Super ! Tu as choisi le Français. Maintenant, choisis ton service ci-dessus : Vodacom, Orange ou Airtel. <button onclick='ecouterTexte()'>🎧 Ecouter</button> <button onclick='fermerLia()'>X Fermer</button>";
-choixLingala = "Malonga ! Oponi Lingala. Sikoyo, ponaka service na yo likolo : Vodacom, Orange to Airtel. <button onclick='ecouterTexte()'>🎧 Ecouter</button> <button onclick='fermerLia()'>X Fermer</button>";
+document.addEventListener("click", function(e){ if(e.target && e.target.innerText && e.target.innerText.includes("Ecouter")){ ecouterTexte(); } });choixFrancais = "Super ! Tu as choisi le Français. Maintenant, choisis ton service ci-dessus : Vodacom, Orange ou Airtel.  <button>🎧 Ecouter</button><button onclick='fermerLia()'>X Fermer</button>";
+choixLingala = "Malonga ! Oponi Lingala. Sikoyo, ponaka service na yo likolo : Vodacom, Orange to Airtel. <button>🎧 Ecouter</button><button onclick='fermerLia()'>X Fermer</button>";
 function parlerLia(){let b=document.getElementById("boiteLia");if(b){b.style.display="block";}let texte=b.innerText;let voix=new SpeechSynthesisUtterance(texte);voix.lang='fr-FR';speechSynthesis.speak(voix);}
 function ecouterTexte(texte){speechSynthesis.cancel();let voix=new SpeechSynthesisUtterance(texte);voix.lang='fr-FR';speechSynthesis.speak(voix);}
 function fermerLia(){let b=document.getElementById("boiteLia");if(b){b.style.display="none";}}
