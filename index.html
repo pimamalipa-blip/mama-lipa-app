@@ -3,146 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mama Lipa</title>
-<script src="https://sdk.minepi.com/pi-sdk.js"></script>
+<title>Mon Appli Lia</title>
 <style>
-body{font-family:Arial,sans-serif;background:#f8f8f8;margin:0;padding:20px;text-align:center}
-.card{background:white;border-radius:20px;padding:20px;max-width:400px;margin:auto;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
-h1{color:#6C2BD9}
-.service{display:flex;gap:10px;justify-content:center;margin:15px 0;flex-wrap:wrap}
-.service button{padding:10px 15px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer}
-.service button.active{background:#6C2BD9;color:white}
-#forfaits button{padding:10px 12px;border-radius:15px;border:1px solid #ddd;background:#fff;cursor:pointer;margin:5px}
-input{width:90%;padding:12px;border-radius:12px;border:1px solid #ddd;margin:10px 0;font-size:16px}
-.pay{background:#6C2BD9;color:white;border:none;padding:15px;width:100%;border-radius:15px;font-size:18px;font-weight:bold;cursor:pointer}
-#status{margin-top:15px;font-size:14px;color:#333}
+body{font-family:Arial;text-align:center;padding:20px;background:#f5f5f5}
+button{padding:12px 18px;margin:6px;font-size:16px;border-radius:10px;border:none;background:#7b2ff7;color:white;cursor:pointer}
+#boiteLia{background:white;padding:15px;border-radius:12px;margin-top:15px;min-height:80px;text-align:left}
 </style>
 </head>
 <body>
-<div class="card">
-<h1>Mama Lipa</h1>
-<p>Paiement Pi pour Kinshasa</p>
-<p>Choisis ton service:</p>
-<div class="service">
-<button onclick="choisir(this,'Vodacom')"><img src="https://logo.clearbit.com/vodacom.cd" width="24" style="vertical-align:middle;border-radius:50%"> Vodacom</button>
-<button onclick="choisir(this,'Orange')"><img src="https://logo.clearbit.com/orange.com" width="24" style="vertical-align:middle;border-radius:50%"> Orange</button>
-<button onclick="choisir(this,'Airtel')"><img src="https://logo.clearbit.com/airtel.com" width="24" style="vertical-align:middle;border-radius:50%"> Airtel</button>
-<button onclick="choisir(this,'Canal+')"><img src="https://logo.clearbit.com/canalplus.com" width="24" style="vertical-align:middle;border-radius:50%"> Canal+</button>
-<button onclick="choisir(this,'StarTimes')"><img src="https://logo.clearbit.com/startimes.com.cn" width="24" style="vertical-align:middle;border-radius:50%"> StarTimes</button>
-</div>
-<div id="forfaits"></div>
-<input id="montant" type="number" value="" placeholder="Montant en Pi">
-<input id="numero" type="text" placeholder="Numéro / Abonné ex: 081...">
-<button class="pay" onclick="payer()">Payer avec Pi</button>
-<button onclick="ouvrirLia()" style="width:100%;padding:12px;margin-top:10px;background:white;border:2px solid #6C2BD9;color:#6C2BD9;border-radius:12px;font-weight:bold;">💬 Parler à Lia - Ask Assistant IA</button>
-<p id="status">Prêt. Choisis un service et clique Payer.</p>
-<p style="font-size:12px;color:#888">Lia t'aide: Tape ton service, paie en 10 secondes avec Pi.</p>
-</div>
+
+<h2>Bienvenue 👋</h2>
+<button onclick="ouvrirLia()">💬 Lia</button>
+<div id="boiteLia">Clique sur Lia pour commencer.</div>
+
 <script>
-let serviceChoisi = "";
-
-// TAUX A CHANGER PLUS TARD : 1$ = 0,2 Pi
-// Quand la CoreTeam publie la vraie valeur, tu changes juste ce chiffre
-const TAUX = 0.2;
-
-function choisirForfait(prixDollar, label){
-let montantPi = (prixDollar * TAUX).toFixed(2);
-document.getElementById('montant').value = montantPi;
-document.getElementById('status').innerText = "Forfait choisi : " + label + " = " + montantPi + " Pi";
-}
+var choixFrancais = "Bonjour ! Je suis Lia, tu parles le Français. Maintenant, choisis ton service ci-dessus : Vodacom, Orange ou Airtel. <button>🎧 Ecouter</button> <button onclick='fermerLia()'>X Fermer</button>";
+var choixLingala = "Malonga ! Ngai Lia, olobaka Lingala. Sikoyo ponela service na yo : Vodacom, Orange to Airtel. <button>🎧 Ecouter</button> <button onclick='fermerLia()'>X Fermer</button>";
 
 function ouvrirLia(){
-let boite = document.getElementById("boiteLia");
-if(!boite){
-boite = document.createElement("div");
-boite.id = "boiteLia";
-boite.style.cssText="position:fixed;left:12px;bottom:150px;width:300px;background:#fff;border:1px solid #ddd;border-radius:25px;padding:14px;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:999;";
-boite.innerHTML='<b> Lia :</b><br>Bonjour, je suis Lia ! Je peux vous aider en francais et en lingala. Quel forfait voulez-vous ?<br><br><i>Vodacom, Orange, Airtel, Canal+ ou StarTimes ?</i><br><br><button id="btnFr">Francais</button> <button id="btnLi">Lingala</button><br><br><button id="btnFermer">X Fermer</button>';
-document.querySelector(".card").appendChild(boite);
-document.getElementById("btnFr").onclick = function(){ choisirLia("fr"); };
-document.getElementById("btnLi").onclick = function(){ choisirLia("li"); };
-document.getElementById("btnFermer").onclick = function(){ fermerLia(); };
-boite.scrollIntoView({behavior:"smooth"});
-} else {
-boite.style.display = boite.style.display === "none" ? "block" : "none";
+  document.getElementById("boiteLia").innerHTML = "Bonjour ! Je suis Lia, ton assistante. Choisis ta langue : <br><br><button onclick=\"choisirLia('fr')\">Français</button> <button onclick=\"choisirLia('ln')\">Lingala</button> <button onclick='fermerLia()'>X Fermer</button>";
+  parlerLia("Bonjour, je suis Lia");
 }
-}
-function choisirLia(nom){ if(nom=="fr"){document.getElementById("boiteLia").innerHTML=choixFrancais;}else{document.getElementById("boiteLia").innerHTML=choixLingala;} }
-function ecouterTexte(){ var texte=document.getElementById("boiteLia").innerText.replace("🎧 Ecouter","").replace("X Fermer","").replace("Fermer",""); try{ speechSynthesis.cancel(); var u=new SpeechSynthesisUtterance(texte); u.lang="fr-FR"; speechSynthesis.speak(u); }catch(e){} setTimeout(function(){ var a=new Audio("https://api.streamelements.com/kappa/v2/speech?voice=Brian&text="+encodeURIComponent(texte)); a.play().catch(function(){}); }, 800); }
-document.addEventListener("click", function(e){ if(e.target && e.target.textContent && e.target.textContent.includes("Ecouter")){ ecouterTexte(); } });le Français. Maintenant, choisis ton service ci-dessus : Vodacom, Orange ou Airtel.  <button>🎧 Ecouter</button><button onclick='fermerLia()'>X Fermer</button>";
-choixLingala = "Malonga ! Oponi Lingala. Sikoyo, ponaka service na yo likolo : Vodacom, Orange to Airtel. <button>🎧 Ecouter</button><button onclick='fermerLia()'>X Fermer</button>";
-function parlerLia(){let b=document.getElementById("boiteLia");if(b){b.style.display="block";}let texte=b.innerText;let voix=new SpeechSynthesisUtterance(texte);voix.lang='fr-FR';speechSynthesis.speak(voix);}
-function ecouterTexte(){ var boite=document.getElementById("boiteLia"); if(!boite) return; var texte=boite.innerText.replace("🎧 Ecouter","").replace("X Fermer","").trim(); if(!texte) return; speechSynthesis.cancel(); var voix=new SpeechSynthesisUtterance(texte); voix.lang="fr-FR"; voix.volume=1; speechSynthesis.speak(voix); }
-function fermerLia(){let b=document.getElementById("boiteLia");if(b){b.style.display="none";}}
 
-function afficherForfaits(nom){
-let html="";
-if(nom=="Vodacom"){
-html="<p><b>Choisis ton forfait Vodacom :</b></p>";
-html+='<button onclick="choisirForfait(1,\'1$ = 1,5 GB - 24h\')">1$ = 1,5 GB - 24h</button>';
-html+='<button onclick="choisirForfait(1,\'1$ = 1 GB - 48h\')">1$ = 1 GB - 48h</button>';
-html+='<button onclick="choisirForfait(2,\'2$ = 2,5 GB - 48h\')">2$ = 2,5 GB - 48h</button>';
-html+='<button onclick="choisirForfait(5,\'5$ = 3,2 GB - 7 jours\')">5$ = 3,2 GB - 7 jours</button>';
-html+='<button onclick="choisirForfait(10,\'10$ = 14 GB - 7 jours\')">10$ = 14 GB - 7 jours</button>';
-html+='<button onclick="choisirForfait(1,\'1$ = 5 GB - Nuit\')">1$ = 5 GB - Nuit</button>';
+function choisirLia(langue){
+  if(langue == "fr"){
+    document.getElementById("boiteLia").innerHTML = choixFrancais;
+  } else {
+    document.getElementById("boiteLia").innerHTML = choixLingala;
+  }
 }
-if(nom=="Orange"){
-html="<p><b>Choisis ton forfait Orange :</b></p>";
-html+='<button onclick="choisirForfait(2,\'2$ = 5 Go - 72H\')">2$ = 5 Go - 72H</button>';
-html+='<button onclick="choisirForfait(1.5,\'1.50$ = 4 Go - 48H\')">1.50$ = 4 Go - 48H</button>';
-html+='<button onclick="choisirForfait(1.2,\'1.20$ = 3 Go - 48H\')">1.20$ = 3 Go - 48H</button>';
-html+='<button onclick="choisirForfait(1,\'1$ = 2,5 Go - 24H\')">1$ = 2,5 Go - 24H</button>';
-html+='<button onclick="choisirForfait(0.5,\'0.50$ = 1 Go - Jour J\')">0.50$ = 1 Go - Jour J</button>';
-html+='<button onclick="choisirForfait(0.2,\'0.20$ = 120 Mo - 3jrs\')">0.20$ = 120 Mo - 3jrs</button>';
-html+='<button onclick="choisirForfait(0.3,\'0.30$ = 200 Mo - 3jrs\')">0.30$ = 200 Mo - 3jrs</button>';
-html+='<button onclick="choisirForfait(0.5,\'0.50$ = 350 Mo - 3jrs\')">0.50$ = 350 Mo - 3jrs</button>';
+
+function fermerLia(){
+  document.getElementById("boiteLia").innerHTML = "Clique sur Lia pour commencer.";
+  try{ speechSynthesis.cancel(); }catch(e){}
 }
-if(nom=="Airtel"){
-html="<p><b>Choisis ton forfait Airtel :</b></p>";
-html+="<button onclick=\"choisirForfait(7,'7$ = 9 GB - 7 jours')\">7$ = 9 GB - 7 jours</button>";
-html+="<button onclick=\"choisirForfait(5,'5$ = 3.5 GB - 7 jours')\">5$ = 3.5 GB - 7 jours</button>";
-html+="<button onclick=\"choisirForfait(1,'1$ = 2.2 GB - 24H')\">1$ = 2.2 GB - 24H</button>";
-html+="<button onclick=\"choisirForfait(2,'2$ = 1.25 GB - 7 jours')\">2$ = 1.25 GB - 7 jours</button>";
-html+="<button onclick=\"choisirForfait(0.2,'0.2$ = 120 MB - 3 jours')\">0.2$ = 120 MB - 3 jours</button>";
-html+="<button onclick=\"choisirForfait(1,'1$ = 600 MB - 7 jours')\">1$ = 600 MB - 7 jours</button>";
-html+="<button onclick=\"choisirForfait(0.5,'0.5$ = 300 MB - 3 jours')\">0.5$ = 300 MB - 3 jours</button>";
+
+function parlerLia(texte){
+  try{
+    speechSynthesis.cancel();
+    var voix = new SpeechSynthesisUtterance(texte);
+    voix.lang = "fr-FR";
+    voix.volume = 1;
+    speechSynthesis.speak(voix);
+  }catch(e){}
 }
-if(nom=="Canal+"){
-html="<p><b>Canal+ - Bientôt disponible</b></p><p>Nos offres Canal+ arrivent très bientôt sur PiPay. Restez connectés !</p>";
+
+function ecouterTexte(){
+  var boite = document.getElementById("boiteLia");
+  if(!boite) return;
+  var texte = boite.innerText.replace("🎧 Ecouter","").replace("X Fermer","").trim();
+  if(!texte) return;
+  try{
+    speechSynthesis.cancel();
+    var voix = new SpeechSynthesisUtterance(texte);
+    voix.lang = "fr-FR";
+    voix.volume = 1;
+    speechSynthesis.speak(voix);
+  }catch(e){}
 }
-if(nom=="StarTimes"){
-html="<p><b>StarTimes - Bientôt disponible</b></p><p>Nos offres StarTimes arrivent très bientôt sur PiPay. Restez connectés !</p>";
-}
-document.getElementById("forfaits").innerHTML=html;
-}
-document.getElementById("forfaits").addEventListener("click",function(e){
-if(e.target.tagName=="BUTTON"){
-let tous=document.querySelectorAll("#forfaits button");
-tous.forEach(b=>{b.style.background="white";b.style.color="black";});
-e.target.style.background="#7c3aed";e.target.style.color="white";
-}
+
+document.addEventListener("click", function(e){
+  if(e.target && e.target.innerText && e.target.innerText.includes("Ecouter")){
+    ecouterTexte();
+  }
 });
-function choisir(btn,nom){serviceChoisi=nom; afficherForfaits(nom); document.querySelectorAll('.service button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('status').innerText="Service: "+nom;}
-const Pi=window.Pi;
-if(Pi){Pi.init({version:"2.0",sandbox:false});}
-async function payer(){
-const montant=document.getElementById('montant').value;
-const numero=document.getElementById('numero').value;
-const status=document.getElementById('status');
-if(!Pi){status.innerText="Ouvre cette page dans Pi Browser, pas Chrome.";alert("Ouvre dans Pi Browser pour payer avec Pi");return;}
-if(!montant||montant<=0){status.innerText="Mets un montant valide";return;}
-status.innerText="Connexion à Pi... patiente...";
-try{
-const auth=await Pi.authenticate(['username','payments'],function(p){});
-status.innerText="Mbote "+auth.user.username+"! Ouverture du Wallet...";
-await Pi.createPayment({amount:parseFloat(montant),memo:"Mama Lipa - "+serviceChoisi+" - "+numero,metadata:{service:serviceChoisi,numero:numero}},{
-onReadyForServerApproval:function(paymentId){status.innerText="En attente... ID: "+paymentId;},
-onReadyForServerCompletion:function(paymentId,txid){status.innerText="Paiement réussi! Merci! Tx: "+txid;alert("Paiement Mama Lipa réussi!");},
-onCancel:function(paymentId){status.innerText="Paiement annulé";},
-onError:function(error,payment){status.innerText="Erreur: "+error;alert("Erreur: "+JSON.stringify(error));}
-});
-}catch(e){status.innerText="Erreur: "+e.message;alert("Erreur Pi: "+e.message);}
-}
 </script>
+
 </body>
 </html>
